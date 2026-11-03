@@ -89,7 +89,7 @@ export const WeekendColorControl: React.FC<WeekendColorControlProps> = ({
         borderRadius: 8,
         padding: 10,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 0
       }}
     >
       <div

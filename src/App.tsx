@@ -702,20 +702,6 @@ export const App: React.FC = () => {
               onBorderWidthChange={(w) => setState((p) => ({ ...p, borderWidth: w }))}
               borderColor={state.borderColor}
               onBorderColorChange={(c) => setState((p) => ({ ...p, borderColor: c }))}
-              showWeekendBg={state.showWeekendBg}
-              onShowWeekendBgChange={(val) => updateWeekendSettings({ showWeekendBg: val })}
-              saturdayBgColor={state.saturdayBgColor}
-              onSaturdayBgColorChange={(c) => updateWeekendSettings({ saturdayBgColor: c })}
-              sundayBgColor={state.sundayBgColor}
-              onSundayBgColorChange={(c) => updateWeekendSettings({ sundayBgColor: c })}
-              linkWeekendColors={state.linkWeekendColors}
-              onLinkWeekendColorsChange={(val) =>
-                updateWeekendSettings({ linkWeekendColors: val })
-              }
-              colorWeekendHeaders={state.colorWeekendHeaders}
-              onColorWeekendHeadersChange={(val) =>
-                updateWeekendSettings({ colorWeekendHeaders: val })
-              }
               datePosition={state.datePosition}
               onDatePositionChange={(pos) =>
                 setState((p) => ({ ...p, datePosition: pos }))

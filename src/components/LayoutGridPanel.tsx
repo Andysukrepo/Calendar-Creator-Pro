@@ -8,7 +8,6 @@ import {
   HeaderStyle,
   PageSize
 } from '../types';
-import { WeekendColorControl } from './WeekendColorControl';
 
 interface LayoutGridPanelProps {
   layout: CalendarLayout;
@@ -36,17 +35,6 @@ interface LayoutGridPanelProps {
   onBorderWidthChange: (w: number) => void;
   borderColor: string;
   onBorderColorChange: (c: string) => void;
-
-  showWeekendBg: boolean;
-  onShowWeekendBgChange: (val: boolean) => void;
-  saturdayBgColor: string;
-  onSaturdayBgColorChange: (c: string) => void;
-  sundayBgColor: string;
-  onSundayBgColorChange: (c: string) => void;
-  linkWeekendColors: boolean;
-  onLinkWeekendColorsChange: (val: boolean) => void;
-  colorWeekendHeaders: boolean;
-  onColorWeekendHeadersChange: (val: boolean) => void;
 
   datePosition: DatePosition;
   onDatePositionChange: (pos: DatePosition) => void;
@@ -86,17 +74,6 @@ export const LayoutGridPanel: React.FC<LayoutGridPanelProps> = ({
   onBorderWidthChange,
   borderColor,
   onBorderColorChange,
-
-  showWeekendBg,
-  onShowWeekendBgChange,
-  saturdayBgColor,
-  onSaturdayBgColorChange,
-  sundayBgColor,
-  onSundayBgColorChange,
-  linkWeekendColors,
-  onLinkWeekendColorsChange,
-  colorWeekendHeaders,
-  onColorWeekendHeadersChange,
 
   datePosition,
   onDatePositionChange,
@@ -342,22 +319,6 @@ export const LayoutGridPanel: React.FC<LayoutGridPanelProps> = ({
           </div>
         </div>
       </div>
-
-      <div className="divider" />
-
-      {/* Weekend Column Colours */}
-      <WeekendColorControl
-        showWeekendBg={showWeekendBg}
-        onShowWeekendBgChange={onShowWeekendBgChange}
-        saturdayBgColor={saturdayBgColor}
-        onSaturdayBgColorChange={onSaturdayBgColorChange}
-        sundayBgColor={sundayBgColor}
-        onSundayBgColorChange={onSundayBgColorChange}
-        linkWeekendColors={linkWeekendColors}
-        onLinkWeekendColorsChange={onLinkWeekendColorsChange}
-        colorWeekendHeaders={colorWeekendHeaders}
-        onColorWeekendHeadersChange={onColorWeekendHeadersChange}
-      />
 
       <div className="divider" />
 

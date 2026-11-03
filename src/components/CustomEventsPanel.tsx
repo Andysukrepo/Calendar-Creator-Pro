@@ -158,22 +158,24 @@ export const CustomEventsPanel: React.FC<CustomEventsPanelProps> = ({
         </span>
       </div>
 
-      <ul id="customEventList" className="event-list">
-        {customEvents.map((ev, i) => (
-          <li key={`${ev.date}-${ev.label}-${i}`}>
-            <span>
-              {ev.date}: {ev.label}
-            </span>
-            <button
-              type="button"
-              title="Remove event"
-              onClick={() => onRemoveEvent(i)}
-            >
-              x
-            </button>
-          </li>
-        ))}
-      </ul>
+      {customEvents.length > 0 && (
+        <ul id="customEventList" className="event-list">
+          {customEvents.map((ev, i) => (
+            <li key={`${ev.date}-${ev.label}-${i}`}>
+              <span>
+                {ev.date}: {ev.label}
+              </span>
+              <button
+                type="button"
+                title="Remove event"
+                onClick={() => onRemoveEvent(i)}
+              >
+                x
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

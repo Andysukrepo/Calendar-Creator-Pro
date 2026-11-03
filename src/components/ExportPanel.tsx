@@ -153,39 +153,41 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
         </div>
       </div>
 
-      {isPro ? (
-        <button
-          id="downloadBtn"
-          type="button"
-          className="tmm-btn tmm-btn-primary full-width"
-          disabled={exporting}
-          onClick={onDownload}
-        >
-          {exporting ? exportStatusText || 'Generating...' : 'Download calendar'}
-        </button>
-      ) : (
-        <button
-          id="downloadBtn"
-          type="button"
-          className="tmm-btn tmm-btn-primary full-width"
-          onClick={handleButtonClick}
-          style={{ background: '#0369a1', borderColor: '#0284c7' }}
-        >
-          🔓 Unlock PRO to Download
-        </button>
-      )}
+      <div className="export-actions-footer">
+        {isPro ? (
+          <button
+            id="downloadBtn"
+            type="button"
+            className="tmm-btn tmm-btn-primary full-width"
+            disabled={exporting}
+            onClick={onDownload}
+          >
+            {exporting ? exportStatusText || 'Generating...' : 'Download calendar'}
+          </button>
+        ) : (
+          <button
+            id="downloadBtn"
+            type="button"
+            className="tmm-btn tmm-btn-primary full-width"
+            onClick={handleButtonClick}
+            style={{ background: '#0369a1', borderColor: '#0284c7' }}
+          >
+            🔓 Unlock PRO to Download
+          </button>
+        )}
 
-      <p
-        id="downloadHint"
-        className="hint tiny"
-        style={
-          isPro
-            ? { color: '#16a34a', fontWeight: 600 }
-            : {}
-        }
-      >
-        {isPro ? 'PRO Active. Ready to download.' : 'Downloads locked in DEMO MODE. Click to unlock on Payhip.'}
-      </p>
+        <p
+          id="downloadHint"
+          className="hint tiny"
+          style={
+            isPro
+              ? { color: '#16a34a', fontWeight: 600, margin: '6px 0 0' }
+              : { margin: '6px 0 0' }
+          }
+        >
+          {isPro ? 'PRO Active. Ready to download.' : 'Downloads locked in DEMO MODE. Click to unlock on Payhip.'}
+        </p>
+      </div>
     </section>
   );
 };
