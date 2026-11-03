@@ -27,6 +27,19 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ state }) => {
   const headers = getDayHeaders(state.headerStyle, state.startMonday);
   const weekendIndices = state.startMonday ? [5, 6] : [0, 6];
 
+  const getColumnBg = (colIndex: number): string | undefined => {
+    if (!state.showWeekendBg) return undefined;
+    const isSat = state.startMonday ? colIndex === 5 : colIndex === 6;
+    const isSun = state.startMonday ? colIndex === 6 : colIndex === 0;
+    if (isSat && state.saturdayBgColor && state.saturdayBgColor !== 'transparent') {
+      return state.saturdayBgColor;
+    }
+    if (isSun && state.sundayBgColor && state.sundayBgColor !== 'transparent') {
+      return state.sundayBgColor;
+    }
+    return undefined;
+  };
+
   const firstDay = new Date(state.year, state.month, 1);
   const lastDay = new Date(state.year, state.month + 1, 0);
 
@@ -66,10 +79,17 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ state }) => {
     // 7 Day columns
     for (let c = 0; c < 7; c++) {
       const cellKey = `cell-${r}-${c}`;
+      const cellBg = getColumnBg(c);
 
       if ((r === 0 && c < startIndex) || currentDay > lastDay.getDate()) {
         rowCells.push(
-          <td key={cellKey} style={{ border: borderStyle }} />
+          <td
+            key={cellKey}
+            style={{
+              border: borderStyle,
+              backgroundColor: cellBg
+            }}
+          />
         );
         continue;
       }
@@ -80,7 +100,13 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ state }) => {
       const events = getEventsForDate(dateObj, state.enabledEvents, state.customEvents);
 
       rowCells.push(
-        <td key={cellKey} style={{ border: borderStyle }}>
+        <td
+          key={cellKey}
+          style={{
+            border: borderStyle,
+            backgroundColor: cellBg
+          }}
+        >
           <div
             className="date-number"
             style={{
@@ -136,13 +162,15 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ state }) => {
               )}
               {headers.map((h, i) => {
                 const isWknd = weekendIndices.includes(i);
+                const headerBg = state.colorWeekendHeaders ? getColumnBg(i) : undefined;
                 return (
                   <th
                     key={h}
                     style={{
                       border: borderStyle,
                       fontWeight: state.gridFontWeight,
-                      color: isWknd ? state.weekendHeaderColor : state.weekdayColor
+                      color: isWknd ? state.weekendHeaderColor : state.weekdayColor,
+                      backgroundColor: headerBg
                     }}
                   >
                     {h}

@@ -57,6 +57,13 @@ export interface CalendarState {
   showWeekNumbers: boolean;
   transparentBg: boolean;
 
+  // Weekend Column Colours
+  showWeekendBg: boolean;
+  saturdayBgColor: string;
+  sundayBgColor: string;
+  linkWeekendColors: boolean;
+  colorWeekendHeaders: boolean;
+
   // Title Typography
   titleFontFamily: string;
   titleSize: number;

@@ -61,6 +61,12 @@ export const App: React.FC = () => {
     showWeekNumbers: false,
     transparentBg: false,
 
+    showWeekendBg: false,
+    saturdayBgColor: '#f1f5f9',
+    sundayBgColor: '#f1f5f9',
+    linkWeekendColors: true,
+    colorWeekendHeaders: true,
+
     titleFontFamily: 'Inter, system-ui, sans-serif',
     titleSize: 32,
     titleFontWeight: 400,
@@ -126,6 +132,23 @@ export const App: React.FC = () => {
       const savedKey = localStorage.getItem('tmm_license_key');
       if (savedKey) {
         verifyLicenseKey(savedKey, true);
+      }
+    }
+
+    const savedWeekendSettings = localStorage.getItem('tmm_weekend_settings');
+    if (savedWeekendSettings) {
+      try {
+        const parsed = JSON.parse(savedWeekendSettings);
+        setState((p) => ({
+          ...p,
+          showWeekendBg: parsed.showWeekendBg ?? p.showWeekendBg,
+          saturdayBgColor: parsed.saturdayBgColor ?? p.saturdayBgColor,
+          sundayBgColor: parsed.sundayBgColor ?? p.sundayBgColor,
+          linkWeekendColors: parsed.linkWeekendColors ?? p.linkWeekendColors,
+          colorWeekendHeaders: parsed.colorWeekendHeaders ?? p.colorWeekendHeaders
+        }));
+      } catch (e) {
+        console.error('Failed to parse saved weekend settings', e);
       }
     }
 
@@ -277,6 +300,27 @@ export const App: React.FC = () => {
     setIsPro(false);
     setLicenseMessage({ text: 'License cleared. Switched to DEMO mode.', type: 'info' });
     showToast('License cleared! Switched to Demo Mode for testing.', 'info');
+  };
+
+  const updateWeekendSettings = (updates: Partial<CalendarState>) => {
+    setState((prev) => {
+      const next = { ...prev, ...updates };
+      try {
+        localStorage.setItem(
+          'tmm_weekend_settings',
+          JSON.stringify({
+            showWeekendBg: next.showWeekendBg,
+            saturdayBgColor: next.saturdayBgColor,
+            sundayBgColor: next.sundayBgColor,
+            linkWeekendColors: next.linkWeekendColors,
+            colorWeekendHeaders: next.colorWeekendHeaders
+          })
+        );
+      } catch (e) {
+        console.error('Failed to save weekend settings', e);
+      }
+      return next;
+    });
   };
 
   // Layout switcher helper with page size side-effects
@@ -611,6 +655,20 @@ export const App: React.FC = () => {
             onWeekendHeaderColorChange={(c) =>
               setState((p) => ({ ...p, weekendHeaderColor: c }))
             }
+            showWeekendBg={state.showWeekendBg}
+            onShowWeekendBgChange={(val) => updateWeekendSettings({ showWeekendBg: val })}
+            saturdayBgColor={state.saturdayBgColor}
+            onSaturdayBgColorChange={(c) => updateWeekendSettings({ saturdayBgColor: c })}
+            sundayBgColor={state.sundayBgColor}
+            onSundayBgColorChange={(c) => updateWeekendSettings({ sundayBgColor: c })}
+            linkWeekendColors={state.linkWeekendColors}
+            onLinkWeekendColorsChange={(val) =>
+              updateWeekendSettings({ linkWeekendColors: val })
+            }
+            colorWeekendHeaders={state.colorWeekendHeaders}
+            onColorWeekendHeadersChange={(val) =>
+              updateWeekendSettings({ colorWeekendHeaders: val })
+            }
           />
 
           {/* COLUMN 3: Layout & Export */}
@@ -644,6 +702,20 @@ export const App: React.FC = () => {
               onBorderWidthChange={(w) => setState((p) => ({ ...p, borderWidth: w }))}
               borderColor={state.borderColor}
               onBorderColorChange={(c) => setState((p) => ({ ...p, borderColor: c }))}
+              showWeekendBg={state.showWeekendBg}
+              onShowWeekendBgChange={(val) => updateWeekendSettings({ showWeekendBg: val })}
+              saturdayBgColor={state.saturdayBgColor}
+              onSaturdayBgColorChange={(c) => updateWeekendSettings({ saturdayBgColor: c })}
+              sundayBgColor={state.sundayBgColor}
+              onSundayBgColorChange={(c) => updateWeekendSettings({ sundayBgColor: c })}
+              linkWeekendColors={state.linkWeekendColors}
+              onLinkWeekendColorsChange={(val) =>
+                updateWeekendSettings({ linkWeekendColors: val })
+              }
+              colorWeekendHeaders={state.colorWeekendHeaders}
+              onColorWeekendHeadersChange={(val) =>
+                updateWeekendSettings({ colorWeekendHeaders: val })
+              }
               datePosition={state.datePosition}
               onDatePositionChange={(pos) =>
                 setState((p) => ({ ...p, datePosition: pos }))

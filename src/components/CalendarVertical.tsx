@@ -32,19 +32,40 @@ export const CalendarVertical: React.FC<CalendarVerticalProps> = ({ state }) => 
   for (let d = 1; d <= daysInMonth; d++) {
     const dateObj = new Date(state.year, state.month, d);
     const dayName = dateObj.toLocaleDateString('en-GB', { weekday: 'short' });
-    const isWknd = dateObj.getDay() === 0 || dateObj.getDay() === 6;
+    const dayOfWeek = dateObj.getDay();
+    const isSat = dayOfWeek === 6;
+    const isSun = dayOfWeek === 0;
+    const isWknd = isSat || isSun;
     const dayColor = isWknd ? state.weekendHeaderColor : state.weekdayColor;
     const events = getEventsForDate(dateObj, state.enabledEvents, state.customEvents);
     const mType = getMoonPhaseType(d, moonMap);
 
+    let rowBg: string | undefined = undefined;
+    if (state.showWeekendBg) {
+      if (isSat && state.saturdayBgColor && state.saturdayBgColor !== 'transparent') {
+        rowBg = state.saturdayBgColor;
+      } else if (isSun && state.sundayBgColor && state.sundayBgColor !== 'transparent') {
+        rowBg = state.sundayBgColor;
+      }
+    }
+
     const userCells: React.ReactNode[] = [];
     for (let k = 0; k < colCount; k++) {
-      userCells.push(<td key={`user-col-${k}`} style={{ border: borderStyle }} />);
+      userCells.push(
+        <td
+          key={`user-col-${k}`}
+          style={{ border: borderStyle, backgroundColor: rowBg }}
+        />
+      );
     }
 
     rows.push(
-      <tr key={`vrow-${d}`} className={isWknd ? 'row-weekend' : ''}>
-        <td style={{ border: borderStyle }}>
+      <tr
+        key={`vrow-${d}`}
+        className={isWknd ? 'row-weekend' : ''}
+        style={{ backgroundColor: rowBg }}
+      >
+        <td style={{ border: borderStyle, backgroundColor: rowBg }}>
           <div className="vertical-cell-container">
             <div className="v-top-row">
               <span className="v-day-name" style={{ color: dayColor }}>

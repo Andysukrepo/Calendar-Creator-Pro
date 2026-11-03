@@ -5,6 +5,7 @@ import {
   popularFontsByCategory
 } from '../data/fonts';
 import { FontCategory, TitleAlign } from '../types';
+import { WeekendColorControl } from './WeekendColorControl';
 
 interface TypographyPanelProps {
   titleFontFamily: string;
@@ -30,6 +31,17 @@ interface TypographyPanelProps {
   onDateColorChange: (c: string) => void;
   onWeekdayColorChange: (c: string) => void;
   onWeekendHeaderColorChange: (c: string) => void;
+
+  showWeekendBg?: boolean;
+  onShowWeekendBgChange?: (val: boolean) => void;
+  saturdayBgColor?: string;
+  onSaturdayBgColorChange?: (c: string) => void;
+  sundayBgColor?: string;
+  onSundayBgColorChange?: (c: string) => void;
+  linkWeekendColors?: boolean;
+  onLinkWeekendColorsChange?: (val: boolean) => void;
+  colorWeekendHeaders?: boolean;
+  onColorWeekendHeadersChange?: (val: boolean) => void;
 }
 
 export const TypographyPanel: React.FC<TypographyPanelProps> = ({
@@ -55,7 +67,18 @@ export const TypographyPanel: React.FC<TypographyPanelProps> = ({
   onGridFontWeightChange,
   onDateColorChange,
   onWeekdayColorChange,
-  onWeekendHeaderColorChange
+  onWeekendHeaderColorChange,
+
+  showWeekendBg,
+  onShowWeekendBgChange,
+  saturdayBgColor,
+  onSaturdayBgColorChange,
+  sundayBgColor,
+  onSundayBgColorChange,
+  linkWeekendColors,
+  onLinkWeekendColorsChange,
+  colorWeekendHeaders,
+  onColorWeekendHeadersChange
 }) => {
   // Title font search state
   const [titleCategory, setTitleCategory] = useState<FontCategory>('sans-serif');
@@ -424,6 +447,21 @@ export const TypographyPanel: React.FC<TypographyPanelProps> = ({
             />
           </div>
         </div>
+
+        {onShowWeekendBgChange && onSaturdayBgColorChange && onSundayBgColorChange && (
+          <WeekendColorControl
+            showWeekendBg={showWeekendBg ?? false}
+            onShowWeekendBgChange={onShowWeekendBgChange}
+            saturdayBgColor={saturdayBgColor ?? '#f1f5f9'}
+            onSaturdayBgColorChange={onSaturdayBgColorChange}
+            sundayBgColor={sundayBgColor ?? '#f1f5f9'}
+            onSundayBgColorChange={onSundayBgColorChange}
+            linkWeekendColors={linkWeekendColors ?? true}
+            onLinkWeekendColorsChange={onLinkWeekendColorsChange ?? (() => {})}
+            colorWeekendHeaders={colorWeekendHeaders ?? true}
+            onColorWeekendHeadersChange={onColorWeekendHeadersChange ?? (() => {})}
+          />
+        )}
       </section>
     </div>
   );

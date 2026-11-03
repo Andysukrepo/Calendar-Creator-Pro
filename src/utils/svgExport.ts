@@ -75,6 +75,19 @@ export function exportGridSVG(state: CalendarState, styled: boolean) {
     headers.forEach((h, i) => {
       const hx = margin + i * cellW + cellW / 2;
       const fill = weekendIndices.includes(i) ? state.weekendHeaderColor : state.weekdayColor;
+      const isSat = state.startMonday ? i === 5 : i === 6;
+      const isSun = state.startMonday ? i === 6 : i === 0;
+      let headerBg = '';
+      if (state.showWeekendBg && state.colorWeekendHeaders) {
+        if (isSat && state.saturdayBgColor && state.saturdayBgColor !== 'transparent') {
+          headerBg = state.saturdayBgColor;
+        } else if (isSun && state.sundayBgColor && state.sundayBgColor !== 'transparent') {
+          headerBg = state.sundayBgColor;
+        }
+      }
+      if (headerBg) {
+        svg += `<rect x="${margin + i * cellW}" y="${headerY - 40}" width="${cellW}" height="55" fill="${headerBg}"/>`;
+      }
       svg += `<text x="${hx}" y="${headerY}" text-anchor="middle" font-family="${cleanGridFamily}" font-size="30" font-weight="bold" fill="${fill}">${h}</text>`;
     });
   }
@@ -86,6 +99,25 @@ export function exportGridSVG(state: CalendarState, styled: boolean) {
     for (let c = 0; c < cols; c++) {
       const x = margin + c * cellW;
       const y = gridTop + r * cellH;
+
+      const isSat = state.startMonday ? c === 5 : c === 6;
+      const isSun = state.startMonday ? c === 6 : c === 0;
+      let cellBg = '';
+      if (state.showWeekendBg) {
+        if (isSat && state.saturdayBgColor && state.saturdayBgColor !== 'transparent') {
+          cellBg = state.saturdayBgColor;
+        } else if (isSun && state.sundayBgColor && state.sundayBgColor !== 'transparent') {
+          cellBg = state.sundayBgColor;
+        }
+      }
+
+      if (cellBg) {
+        if (styled) {
+          svg += `<rect x="${x + 2}" y="${y + 2}" width="${cellW - 4}" height="${cellH - 4}" rx="8" fill="${cellBg}"/>`;
+        } else {
+          svg += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="${cellBg}"/>`;
+        }
+      }
 
       if ((r === 0 && c < startIdx) || day > last.getDate()) {
         if (state.showGridLines) {
@@ -248,8 +280,23 @@ export function exportVerticalSVG(state: CalendarState, _styled: boolean) {
   for (let d = 1; d <= days; d++) {
     const y = tableTop + headerH + (d - 1) * rowH;
     const dateObj = new Date(state.year, state.month, d);
-    const isWknd = dateObj.getDay() === 0 || dateObj.getDay() === 6;
+    const dayOfWeek = dateObj.getDay();
+    const isSat = dayOfWeek === 6;
+    const isSun = dayOfWeek === 0;
+    const isWknd = isSat || isSun;
     const dayName = dateObj.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase();
+
+    let rowBg = '';
+    if (state.showWeekendBg) {
+      if (isSat && state.saturdayBgColor && state.saturdayBgColor !== 'transparent') {
+        rowBg = state.saturdayBgColor;
+      } else if (isSun && state.sundayBgColor && state.sundayBgColor !== 'transparent') {
+        rowBg = state.sundayBgColor;
+      }
+    }
+    if (rowBg) {
+      svg += `<rect x="${margin}" y="${y}" width="${width - margin * 2}" height="${rowH}" fill="${rowBg}"/>`;
+    }
 
     const dateTextY = y + rowH / 2 + (isA4 ? 12 : 15);
     const dateFS = isA4 ? 32 : 40;
