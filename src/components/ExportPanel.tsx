@@ -19,6 +19,11 @@ interface ExportPanelProps {
   includeBleed: boolean;
   onIncludeBleedChange: (val: boolean) => void;
 
+  showHeader: boolean;
+  onShowHeaderChange: (val: boolean) => void;
+  showMoonLedger: boolean;
+  onShowMoonLedgerChange: (val: boolean) => void;
+
   isPro: boolean;
   exporting: boolean;
   exportStatusText: string;
@@ -43,6 +48,11 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
   onTransparentBgChange,
   includeBleed,
   onIncludeBleedChange,
+
+  showHeader,
+  onShowHeaderChange,
+  showMoonLedger,
+  onShowMoonLedgerChange,
 
   isPro,
   exporting,
@@ -134,12 +144,38 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
       <div className="export-toggles-container">
         <div className="toggle-row small">
           <input
+            id="showHeaderToggle"
+            type="checkbox"
+            checked={showHeader}
+            onChange={(e) => onShowHeaderChange(e.target.checked)}
+          />
+          <label htmlFor="showHeaderToggle" style={{ cursor: 'pointer', margin: 0 }}>
+            Show calendar header
+          </label>
+        </div>
+
+        <div className="toggle-row small">
+          <input
+            id="showMoonLedgerToggle"
+            type="checkbox"
+            checked={showMoonLedger}
+            onChange={(e) => onShowMoonLedgerChange(e.target.checked)}
+          />
+          <label htmlFor="showMoonLedgerToggle" style={{ cursor: 'pointer', margin: 0 }}>
+            Show moon phase ledger
+          </label>
+        </div>
+
+        <div className="toggle-row small">
+          <input
             id="transparentBgToggle"
             type="checkbox"
             checked={transparentBg}
             onChange={(e) => onTransparentBgChange(e.target.checked)}
           />
-          <span>Transparent Background</span>
+          <label htmlFor="transparentBgToggle" style={{ cursor: 'pointer', margin: 0 }}>
+            Transparent Background
+          </label>
         </div>
 
         <div className="toggle-row small">
@@ -149,7 +185,9 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({
             checked={includeBleed}
             onChange={(e) => onIncludeBleedChange(e.target.checked)}
           />
-          <span>Include 3mm bleed</span>
+          <label htmlFor="bleedToggle" style={{ cursor: 'pointer', margin: 0 }}>
+            Include 3mm bleed
+          </label>
         </div>
       </div>
 

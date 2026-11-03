@@ -134,11 +134,13 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
         )}
 
         {/* TITLE HEADER */}
-        <div style={titleStyles}>
-          <h2 style={titleHeadingStyles}>
-            {MONTH_NAMES[state.month]} {state.year}
-          </h2>
-        </div>
+        {state.showHeader && (
+          <div style={titleStyles}>
+            <h2 style={titleHeadingStyles}>
+              {MONTH_NAMES[state.month]} {state.year}
+            </h2>
+          </div>
+        )}
 
         {/* CALENDAR CONTENT */}
         {state.layout === 'grid' ? (
@@ -155,15 +157,17 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
           <div>
             <span className="legend-dot special" /> Observance
           </div>
-          <div>
-            <span className="legend-moon-icons">
-              <span className="moon-circle moon-new" title="New" />
-              <span className="moon-circle moon-first" title="First Quarter" />
-              <span className="moon-circle moon-last" title="Last Quarter" />
-              <span className="moon-circle moon-full" title="Full" />
-            </span>{' '}
-            Moon cycle
-          </div>
+          {state.showMoonLedger && (
+            <div>
+              <span className="legend-moon-icons">
+                <span className="moon-circle moon-new" title="New" />
+                <span className="moon-circle moon-first" title="First Quarter" />
+                <span className="moon-circle moon-last" title="Last Quarter" />
+                <span className="moon-circle moon-full" title="Full" />
+              </span>{' '}
+              Moon cycle
+            </div>
+          )}
         </footer>
       </div>
     </section>

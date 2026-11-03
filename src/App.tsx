@@ -82,7 +82,9 @@ export const App: React.FC = () => {
 
     enabledEvents: initialEnabledEvents,
     moonPhasesOn: false,
+    showMoonLedger: false,
     customEvents: [],
+    showHeader: true,
 
     pageSize: 'a4l',
     customWidth: 3508,
@@ -180,7 +182,14 @@ export const App: React.FC = () => {
         break;
 
       case 'toggle_moon':
-        setState((p) => ({ ...p, moonPhasesOn: !p.moonPhasesOn }));
+        setState((p) => {
+          const nextVal = !p.moonPhasesOn;
+          return {
+            ...p,
+            moonPhasesOn: nextVal,
+            showMoonLedger: nextVal ? true : p.showMoonLedger
+          };
+        });
         showToast(
           !state.moonPhasesOn
             ? 'Moon phases turned ON! Check date cells for phase icons.'
@@ -581,7 +590,13 @@ export const App: React.FC = () => {
           <div className="sidebar-col">
             <HolidaysPanel
               moonPhasesOn={state.moonPhasesOn}
-              onToggleMoonPhases={(val) => setState((p) => ({ ...p, moonPhasesOn: val }))}
+              onToggleMoonPhases={(val) =>
+                setState((p) => ({
+                  ...p,
+                  moonPhasesOn: val,
+                  showMoonLedger: val ? true : p.showMoonLedger
+                }))
+              }
               enabledEvents={state.enabledEvents}
               onToggleEvent={(id, enabled) =>
                 setState((p) => ({
@@ -737,6 +752,12 @@ export const App: React.FC = () => {
               includeBleed={state.includeBleed}
               onIncludeBleedChange={(val) =>
                 setState((p) => ({ ...p, includeBleed: val }))
+              }
+              showHeader={state.showHeader}
+              onShowHeaderChange={(val) => setState((p) => ({ ...p, showHeader: val }))}
+              showMoonLedger={state.showMoonLedger}
+              onShowMoonLedgerChange={(val) =>
+                setState((p) => ({ ...p, showMoonLedger: val }))
               }
               isPro={isPro}
               exporting={exporting}

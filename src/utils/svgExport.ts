@@ -65,7 +65,9 @@ export function exportGridSVG(state: CalendarState, styled: boolean) {
   const cleanTitleFamily = state.titleFontFamily.replace(/"/g, "'");
   const cleanGridFamily = state.gridFontFamily.replace(/"/g, "'");
 
-  svg += `<text x="${titlePosX}" y="${titleY}" text-anchor="${titleAnchor}" font-family="${cleanTitleFamily}" font-size="100" font-weight="${state.titleFontWeight}" fill="${state.titleColor}">${escapeHtml(title)}</text>`;
+  if (state.showHeader) {
+    svg += `<text x="${titlePosX}" y="${titleY}" text-anchor="${titleAnchor}" font-family="${cleanTitleFamily}" font-size="100" font-weight="${state.titleFontWeight}" fill="${state.titleColor}">${escapeHtml(title)}</text>`;
+  }
 
   const bW = state.showGridLines ? state.borderWidth : 0;
 
@@ -240,7 +242,9 @@ export function exportVerticalSVG(state: CalendarState, _styled: boolean) {
   const cleanTitleFamily = state.titleFontFamily.replace(/"/g, "'");
   const cleanGridFamily = state.gridFontFamily.replace(/"/g, "'");
 
-  svg += `<text x="${titlePosX}" y="${titleY}" text-anchor="${titleAnchor}" font-family="${cleanTitleFamily}" font-size="${tSize}" font-weight="${state.titleFontWeight}" fill="${state.titleColor}">${escapeHtml(title)}</text>`;
+  if (state.showHeader) {
+    svg += `<text x="${titlePosX}" y="${titleY}" text-anchor="${titleAnchor}" font-family="${cleanTitleFamily}" font-size="${tSize}" font-weight="${state.titleFontWeight}" fill="${state.titleColor}">${escapeHtml(title)}</text>`;
+  }
 
   const bW = state.showGridLines ? state.borderWidth : 0;
   const drawCell = (x: number, y: number, w: number, h: number, text: string, isHeader = false) => {

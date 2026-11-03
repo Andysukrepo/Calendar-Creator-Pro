@@ -82,7 +82,11 @@ export interface CalendarState {
   // Events & Moon
   enabledEvents: Record<string, boolean>;
   moonPhasesOn: boolean;
+  showMoonLedger: boolean;
   customEvents: CustomEvent[];
+
+  // Header display
+  showHeader: boolean;
 
   // Export
   pageSize: PageSize;
