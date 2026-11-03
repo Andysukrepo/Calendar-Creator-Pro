@@ -283,18 +283,6 @@ export const TypographyPanel: React.FC<TypographyPanelProps> = ({
         </div>
       </section>
 
-      {/* MIDDLE CIRCULAR LOGO SHOWCASE */}
-      <div className="panel brand-middle-badge">
-        <div className="brand-center-circle">
-          <img
-            src="/logo.png"
-            alt="This Man Makes Logo"
-            onError={(e) => {
-              (e.currentTarget as HTMLElement).style.display = 'none';
-            }}
-          />
-        </div>
-      </div>
 
       {/* CALENDAR GRID & DATES TYPOGRAPHY */}
       <section className="panel">

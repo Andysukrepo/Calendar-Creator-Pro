@@ -629,7 +629,7 @@ export const App: React.FC = () => {
             />
           </div>
 
-          {/* COLUMN 2: Typography & Middle Circular Logo Badge */}
+          {/* COLUMN 2: Typography */}
           <TypographyPanel
             titleFontFamily={state.titleFontFamily}
             titleSize={state.titleSize}
